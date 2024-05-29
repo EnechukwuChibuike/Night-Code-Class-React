@@ -1,21 +1,25 @@
+import { useState } from "react";
 import "./App.css";
-import Button from "./Button";
-import Form from "./form";
 
 function App() {
-  const changeText = () => {
-    console.log("Clicked");
+  const [text, setText] = useState(1);
+
+  const handleClick = () => {
+    setText((prev) => prev + 1);
+
+    setTimeout(() => {
+      setText((prev) => prev + 1);
+    }, 2000);
+    console.log(text);
   };
 
-  const handleChange = (e) => {
-    console.log(e.target.value);
-  };
   return (
-    <>
-      <h1 className="text-4xl text-blue-600">Hello world</h1>
-      <Button click={changeText} />
-      <Form getValue={handleChange} />
-    </>
+    <main className="h-screen flex justify-center flex-col gap-3 items-center">
+      <h1 className="text-4xl">{text}</h1>
+      <button onClick={handleClick} className="bg-slate-900 p-3 text-white">
+        click
+      </button>
+    </main>
   );
 }
 

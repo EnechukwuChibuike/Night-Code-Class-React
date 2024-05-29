@@ -1,7 +1,10 @@
-function Button({ click }) {
+function Button({ text, bg, handleClick }) {
   return (
-    <button onClick={click} className="p-2 bg-blue-600 text-white">
-      Click me!!
+    <button
+      onClick={handleClick}
+      className={`w-20 p-3 rounded-md ${bg} border-none`}
+    >
+      {text}
     </button>
   );
 }
