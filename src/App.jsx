@@ -9,8 +9,14 @@ function App() {
     setText(!text);
   };
 
+  const [toggleBg, setToggleBg] = useState(true);
+
+  const handleToggleBg = () => {
+    setToggleBg(!toggleBg);
+  };
+
   return (
-    <>
+    <div className={toggleBg ? "bg-black" : "bg-white"}>
       <main className="h-screen flex justify-center flex-col gap-3 items-center">
         {/* {text ? (
         <h1 className="text-4xl">Hi</h1>
@@ -27,8 +33,8 @@ function App() {
           ToggleText
         </button>
       </main>
-      <Mode />
-    </>
+      <Mode toggleBg={toggleBg} handleClick={handleToggleBg} />
+    </div>
   );
 }
 
