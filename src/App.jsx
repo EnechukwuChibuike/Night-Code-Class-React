@@ -1,11 +1,16 @@
+import { useEffect, useState } from "react";
 import "./App.css";
-import Header from "./Header";
 
 function App() {
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    setTimeout(() => {
+      setCount(count + 1);
+    }, 1000);
+  }, [count]);
   return (
     <>
-      <Header />
-      <h1 className="text-5xl text-center">Hello</h1>
+      <h1 className="text-5xl text-center">{count}</h1>
     </>
   );
 }
