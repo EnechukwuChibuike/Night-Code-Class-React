@@ -1,11 +1,12 @@
 import "./App.css";
 import Header from "./Header";
+import Slider from "./Slider";
 
 function App() {
   return (
     <>
       <Header />
-      <h1 className="text-5xl text-center">Hello</h1>
+      <Slider />
     </>
   );
 }
