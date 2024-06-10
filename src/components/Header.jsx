@@ -9,6 +9,13 @@ function Header() {
         <NavLink to="/">Home</NavLink>
         <NavLink to="/about">About</NavLink>
         <NavLink to="/contact">Contact</NavLink>
+        <NavLink to="/products">Products</NavLink>
+        <NavLink
+          to="/login"
+          className="p-3 rounded-md bg-blue-500 text-white hover:bg-blue-600"
+        >
+          Login
+        </NavLink>
       </nav>
     </header>
   );
