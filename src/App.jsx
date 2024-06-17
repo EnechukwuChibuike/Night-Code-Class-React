@@ -1,17 +1,17 @@
 import "./App.css";
-import Products from "./Products";
-import Product from "./Product";
-import Header from "./components/Header";
-import { Routes, Route } from "react-router-dom";
+import Quiz from "./components/Quiz";
+import quiz from "/quiz.jpeg";
 
 function App() {
   return (
-    <main className="">
-      <Header />
-      <Routes>
-        <Route path="/" element={<Products />} />
-        <Route path="/products/:id" element={<Product />} />
-      </Routes>
+    <main className="flex h-screen">
+      <section
+        className={`w-[25vw] bg-[url('/quiz.jpeg')] bg-center h-screen bg-contain bg-no-repeat`}
+      ></section>
+
+      <section className="bg-[#01B2FC] h-screen flex justify-center items-center w-[75vw]">
+        <Quiz />
+      </section>
     </main>
   );
 }
