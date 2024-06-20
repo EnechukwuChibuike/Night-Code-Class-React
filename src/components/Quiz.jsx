@@ -6,9 +6,11 @@ function Quiz() {
 
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [answer, setAnswer] = useState("");
-  const [wrongAnswer, setWrongAnswer] = useState("");
+  const [answer, setAnswer] = useState(undefined);
+  const [currentIndex, setCurrentIndex] = useState(undefined);
   const [currentQuestion, setCurrentQuestion] = useState(0);
+
+  const shuffle = (arr) => arr.sort(() => Math.random() - 0.5);
 
   useEffect(() => {
     const fetchQuiz = async () => {
@@ -16,11 +18,10 @@ function Quiz() {
       const response = await fetch(api);
 
       const result = await response.json();
-
       const quiz = result.results.map((item) => {
         return {
           question: item.question,
-          options: [...item.incorrect_answers, item.correct_answer],
+          options: shuffle([...item.incorrect_answers, item.correct_answer]),
           answer: item.correct_answer,
         };
       });
@@ -28,21 +29,25 @@ function Quiz() {
       setLoading(false);
       setData(quiz);
 
-      console.log(data);
+      console.log(quiz[currentQuestion].options);
+      console.log(quiz[currentQuestion].answer);
     };
 
     fetchQuiz();
   }, []);
 
   const handleClick = (item, index) => {
+    setCurrentIndex(index);
+
     if (item === data[currentQuestion].answer) {
-      setAnswer("bg-green-600 text-white");
-      console.log(index);
+      setAnswer(true);
     } else {
-      setWrongAnswer("bg-red-600");
+      setAnswer(false);
     }
+
     setTimeout(() => {
-      setAnswer("");
+      setAnswer(undefined);
+      setCurrentIndex(undefined);
       setCurrentQuestion((prev) => prev + 1);
     }, 2000);
   };
@@ -53,9 +58,12 @@ function Quiz() {
       {!loading && (
         <section className="border-[black] border-2 w-[50vw] h-[80vh] shadow-lg rounded-[30px]">
           <section className="h-[40%] flex justify-center items-center">
-            <h1 className="text-3xl text-center">
-              {data[currentQuestion].question}
-            </h1>
+            <h1
+              className="text-3xl text-center"
+              dangerouslySetInnerHTML={{
+                __html: data[currentQuestion].question,
+              }}
+            ></h1>
           </section>
 
           {/* //options */}
@@ -65,9 +73,9 @@ function Quiz() {
                 item={item}
                 key={index}
                 onClick={() => handleClick(item, index)}
-                answer={
-                  item === data[currentQuestion].answer ? answer : wrongAnswer
-                }
+                answer={answer}
+                currentIndex={currentIndex}
+                index={index}
               />
             ))}
           </section>
