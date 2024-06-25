@@ -14,7 +14,6 @@ function Quiz() {
 
   useEffect(() => {
     const fetchQuiz = async () => {
-      // setLoading(true);
       const response = await fetch(api);
 
       const result = await response.json();
