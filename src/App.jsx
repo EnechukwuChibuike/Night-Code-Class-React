@@ -1,72 +1,31 @@
-import { useReducer, useState } from "react";
+import { useRef, useEffect } from "react";
 import "./App.css";
 
-const reducer = (state, action) => {
-  switch (action.type) {
-    case "changeName":
-      return {
-        name: action.editedName,
-        age: state.age,
-      };
-    case "changeAge":
-      return {
-        name: state.name,
-        age: state.age + 1,
-      };
-  }
-};
-
 function App() {
-  const [state, dispatch] = useReducer(reducer, { name: "Ada", age: 20 });
+  const inputText = useRef();
 
-  const [editName, setEditName] = useState(false);
-  const [inputValue, setInputValue] = useState("");
+  useEffect(() => {
+    inputText.current.focus();
+  }, []);
 
-  const handleEditName = () => {
-    setEditName(true);
-  };
+  const handleClick = () => {
+    console.log(inputText.current.value);
 
-  const handleChangeName = () => {
-    dispatch({ type: "changeName", editedName: inputValue });
-    setEditName(false);
-  };
-
-  const handleChangeAge = () => {
-    dispatch({ type: "changeAge" });
+    inputText.current.value = "";
   };
   return (
     <main className="flex h-screen justify-center gap-3 flex-col items-center">
-      <h1 className="text-4xl">{state.name}</h1>
-      <h1 className="text-4xl">{state.age}</h1>
+      <form>
+        <input
+          type="text"
+          ref={inputText}
+          className="border-[1px] border-gray-600 px-5"
+        />
 
-      {editName && (
-        <form>
-          <input
-            type="text"
-            className="p-2 border-2"
-            onChange={(e) => setInputValue(e.target.value)}
-          />
-          <button
-            type="button"
-            className="p-2 bg-blue-600 text-white"
-            onClick={handleChangeName}
-          >
-            change
-          </button>
-        </form>
-      )}
-
-      <section className="flex gap-3">
-        <button onClick={handleEditName} className="p-3 bg-blue-600 text-white">
-          Change Name
+        <button type="button" className="p-2 bg-gray-600" onClick={handleClick}>
+          Click
         </button>
-        <button
-          onClick={handleChangeAge}
-          className="p-3 bg-blue-600 text-white"
-        >
-          Change Age
-        </button>
-      </section>
+      </form>
     </main>
   );
 }
