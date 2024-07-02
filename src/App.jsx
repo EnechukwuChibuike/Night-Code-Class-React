@@ -1,27 +1,23 @@
-import { useRef, useEffect } from "react";
+import { useRef } from "react";
 import "./App.css";
+import Input from "./Input";
 
 function App() {
-  const inputText = useRef();
-
-  useEffect(() => {
-    inputText.current.focus();
-  }, []);
+  const inputRef = useRef();
 
   const handleClick = () => {
-    console.log(inputText.current.value);
-
-    inputText.current.value = "";
+    if (inputRef.current.value() === "") {
+      alert("Please fill in the form");
+      inputRef.current.focus();
+    } else {
+      console.log(inputRef.current.value());
+    }
   };
+
   return (
     <main className="flex h-screen justify-center gap-3 flex-col items-center">
       <form>
-        <input
-          type="text"
-          ref={inputText}
-          className="border-[1px] border-gray-600 px-5"
-        />
-
+        <Input ref={inputRef} />
         <button type="button" className="p-2 bg-gray-600" onClick={handleClick}>
           Click
         </button>
